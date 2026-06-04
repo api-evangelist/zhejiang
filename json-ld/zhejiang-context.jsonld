@@ -1,0 +1,63 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "zju": "https://www.zju.edu.cn/ns#",
+    "name": "schema:name",
+    "alternateName": "schema:alternateName",
+    "description": "schema:description",
+    "url": "schema:url",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "address": "schema:address",
+    "foundingDate": "schema:foundingDate",
+    "department": "schema:department",
+    "api": {
+      "@id": "zju:api",
+      "@container": "@set"
+    },
+    "humanURL": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "baseURL": {
+      "@id": "zju:baseURL",
+      "@type": "@id"
+    },
+    "identityProvider": "zju:identityProvider",
+    "entityID": "zju:entityID",
+    "ssoService": "zju:ssoService",
+    "mirrorService": "zju:mirrorService"
+  },
+  "@type": "schema:CollegeOrUniversity",
+  "@id": "https://www.zju.edu.cn/english/",
+  "name": "Zhejiang University",
+  "alternateName": "ZJU",
+  "url": "https://www.zju.edu.cn/english/",
+  "description": "A comprehensive public research university based in Hangzhou, Zhejiang Province, China.",
+  "sameAs": [
+    "https://github.com/zjulug",
+    "https://www.linkedin.com/school/zhejiang-university/"
+  ],
+  "api": [
+    {
+      "@type": "zju:identityProvider",
+      "name": "Unified Identity Authentication (CAS / SSO)",
+      "humanURL": "https://zjuam.zju.edu.cn/cas/login?locale=en",
+      "baseURL": "https://zjuam.zju.edu.cn/cas/"
+    },
+    {
+      "@type": "zju:identityProvider",
+      "name": "Shibboleth Identity Provider (SAML)",
+      "humanURL": "https://idp.zju.edu.cn/idp/shibboleth",
+      "baseURL": "https://idp.zju.edu.cn/idp/",
+      "entityID": "https://idp.zju.edu.cn/idp/shibboleth"
+    },
+    {
+      "@type": "zju:mirrorService",
+      "name": "ZJU Open Source Software Mirrors",
+      "humanURL": "https://mirrors.zju.edu.cn/",
+      "baseURL": "https://mirrors.zju.edu.cn/"
+    }
+  ]
+}
