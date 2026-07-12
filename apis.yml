@@ -77,6 +77,10 @@ apis:
       - type: GitHub
         url: https://github.com/zjulug
 common:
+  - type: VulnerabilityDisclosure
+    url: security/zhejiang-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/zhejiang-domain-security.yml
   - type: Website
     url: https://www.zju.edu.cn/english/
   - type: GitHub
