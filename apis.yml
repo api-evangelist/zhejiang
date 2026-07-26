@@ -1,4 +1,3 @@
----
 aid: zhejiang
 name: Zhejiang University
 description: >-
@@ -13,9 +12,21 @@ description: >-
   research-lab GitHub organizations. No open, self-service application APIs were
   found at the time of review.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+    - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/zhejiang.png
 url: https://raw.githubusercontent.com/api-evangelist/zhejiang/refs/heads/main/apis.yml
 tags:
   - Education
@@ -26,7 +37,7 @@ tags:
   - Identity
   - SSO
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
   - aid: zhejiang:sso
@@ -40,7 +51,7 @@ apis:
       developer documentation is published.
     humanURL: https://zjuam.zju.edu.cn/cas/login?locale=en
     baseURL: https://zjuam.zju.edu.cn/cas/
-    tags: [ Identity, SSO, Authentication, CAS ]
+    tags: [Identity, SSO, Authentication, CAS]
     properties:
       - type: Documentation
         url: https://zjuam.zju.edu.cn/cas/login?locale=en
@@ -55,27 +66,12 @@ apis:
       standards-based federation endpoint rather than a documented public API.
     humanURL: https://idp.zju.edu.cn/idp/shibboleth
     baseURL: https://idp.zju.edu.cn/idp/
-    tags: [ Identity, SSO, SAML, Shibboleth, Federation ]
+    tags: [Identity, SSO, SAML, Shibboleth, Federation]
     properties:
       - type: Documentation
         url: https://idp.zju.edu.cn/idp/shibboleth
       - type: Authentication
         url: https://idp.zju.edu.cn/idp/shibboleth
-  - aid: zhejiang:mirrors
-    name: ZJU Open Source Software Mirrors
-    description: >-
-      A community-maintained (LUG@ZJU) open-source software mirror service that
-      hosts and serves Linux distribution and software package repositories.
-      It is an rsync/HTTP file-mirror service rather than a programmable
-      application API; the maintaining scripts are open source on GitHub.
-    humanURL: https://mirrors.zju.edu.cn/
-    baseURL: https://mirrors.zju.edu.cn/
-    tags: [ Mirror, Open Source, Infrastructure ]
-    properties:
-      - type: Documentation
-        url: https://mirrors.zju.edu.cn/
-      - type: GitHub
-        url: https://github.com/zjulug
 common:
   - type: VulnerabilityDisclosure
     url: security/zhejiang-vulnerability-disclosure.yml
@@ -97,6 +93,8 @@ common:
     url: finops/zhejiang-finops.yml
   - type: Review
     url: review.yml
+  - type: ProductPage
+    url: https://mirrors.zju.edu.cn/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
