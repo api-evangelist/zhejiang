@@ -122,97 +122,117 @@ x-coverage:
     - url: https://repository.zju.edu.cn/
       status: 0
 apis:
-  - aid: zhejiang:mirrors
-    name: Open Source Software Mirror Service (MirrorZ catalog)
-    x-operator: institution
-    x-operator-basis: >-
-      Host mirrors.zju.edu.cn is under zju.edu.cn, ZJU's own registrable domain. The
-      catalog's own site.email is mirrors@zju.edu.cn. Maintained by the ZJU
-      Supercomputing Team (ZJUSCT), a university group, not a vendor.
-    description: >-
-      浙江大学开源软件镜像站 — ZJU's public open source software mirror. The site publishes a
-      machine-readable service catalog at /mirrorz.json implementing the MirrorZ data
-      contract (self-declared version 1.7), listing 63 mirrored repositories with path,
-      sync status token, upstream source, on-disk size and per-repository documentation
-      link. Anonymous read, no authentication, no rate-limit headers, no CORS header.
-      The repositories themselves are served as ordinary HTTPS directory trees. This is
-      the only genuinely machine-readable API-shaped contract Zhejiang University
-      operates itself. ZJU publishes no OpenAPI for it; the OpenAPI and JSON Schema
-      registered below were derived by API Evangelist from the live response.
-    humanURL: https://mirrors.zju.edu.cn/
-    baseURL: https://mirrors.zju.edu.cn
-    tags: [Open Source Mirror, Package Repository, Catalog, Research Computing]
-    properties:
-      - type: OpenAPI
-        url: openapi/zhejiang-mirror-service-openapi.yml
-      - type: JSONSchema
-        url: json-schema/zhejiang-mirrorz-document.json
-      - type: Examples
-        url: examples/zhejiang-mirrorz-example.json
-      - type: APIReference
-        url: https://mirrors.zju.edu.cn/mirrorz.json
-      - type: Documentation
-        url: https://mirrors.zju.edu.cn/docs/
-      - type: Support
-        url: https://github.com/ZJUSCT/mirror-issues
-      - type: Errors
-        url: errors/zhejiang-errors.yml
-      - type: Vocabulary
-        url: vocabulary/zhejiang-vocabulary.yml
-      - type: Lifecycle
-        url: lifecycle/zhejiang-lifecycle.yml
-  - aid: zhejiang:shibboleth
-    name: Shibboleth Identity Provider (SAML 2.0)
-    x-operator: institution
-    x-operator-basis: >-
-      Host idp.zju.edu.cn is under zju.edu.cn. eduGAIN's registry names the entity
-      "Zhejiang University" with scope zju.edu.cn under the CARSI registration authority.
-    description: >-
-      Zhejiang University operates a Shibboleth SAML 2.0 Identity Provider, entityID
-      https://idp.zju.edu.cn/idp/shibboleth, registered in CARSI (the CERNET
-      Authentication and Resource Sharing Infrastructure) and interfederated through
-      eduGAIN since 2020-01-31. It advertises SingleSignOn, SingleLogout,
-      ArtifactResolution and AttributeQuery endpoints across SAML 1.0, SAML 1.1, SAML 2.0
-      and the Shibboleth-native binding. Caveat recorded honestly: the metadata served at
-      the entityID is the unmodified Shibboleth installer artifact — validUntil
-      2020-01-29, expired for six years, with no Organization or ContactPerson block and
-      the template placeholders still commented in. Federated consumers work from the
-      CARSI/eduGAIN aggregate, not from this endpoint.
-    humanURL: https://idp.zju.edu.cn/idp/shibboleth
-    baseURL: https://idp.zju.edu.cn/idp/
-    tags: [Identity Federation, SAML, Shibboleth, Single Sign-On, eduGAIN, CARSI]
-    properties:
-      - type: IdentityFederation
-        url: https://idp.zju.edu.cn/idp/shibboleth
-      - type: Metadata
-        url: identity-federation/zhejiang-idp-saml-metadata.xml
-      - type: IdentityFederation
-        url: identity-federation/zhejiang-identity-federation.yml
-      - type: Conformance
-        url: conformance/zhejiang-education-standards.yml
-      - type: Authentication
-        url: authentication/zhejiang-authentication.yml
-  - aid: zhejiang:sso
-    name: Unified Identity Authentication (CAS / SSO)
-    x-operator: institution
-    x-operator-basis: Host zjuam.zju.edu.cn is under zju.edu.cn, ZJU's own registrable domain.
-    description: >-
-      ZJU's unified identity authentication platform — a Central Authentication Service
-      (CAS) single sign-on login fronting campus systems. It supports username/password,
-      QR-code scanning and third-party hand-off (DingTalk, QQ, WeChat, and Azure/Microsoft
-      for the international campus). Interactive web login only: no service-registration
-      endpoint, no published API contract and no developer documentation are reachable
-      unauthenticated. Recorded as an institution-operated surface, not as a consumable API.
-    humanURL: https://zjuam.zju.edu.cn/cas/login?locale=en
-    baseURL: https://zjuam.zju.edu.cn/cas/
-    tags: [Identity, Single Sign-On, Authentication, CAS]
-    properties:
-      - type: Authentication
-        url: https://zjuam.zju.edu.cn/cas/login?locale=en
-      - type: Authentication
-        url: authentication/zhejiang-authentication.yml
-      - type: Scopes
-        url: scopes/zhejiang-scopes.yml
+- aid: zhejiang:shibboleth
+  name: Shibboleth Identity Provider (SAML 2.0)
+  x-operator: institution
+  x-operator-basis: >-
+    Host idp.zju.edu.cn is under zju.edu.cn. eduGAIN's registry names the entity "Zhejiang University"
+    with scope zju.edu.cn under the CARSI registration authority.
+  description: >-
+    Zhejiang University operates a Shibboleth SAML 2.0 Identity Provider, entityID https://idp.zju.edu.cn/idp/shibboleth,
+    registered in CARSI (the CERNET Authentication and Resource Sharing Infrastructure) and interfederated
+    through eduGAIN since 2020-01-31. It advertises SingleSignOn, SingleLogout, ArtifactResolution and
+    AttributeQuery endpoints across SAML 1.0, SAML 1.1, SAML 2.0 and the Shibboleth-native binding. Caveat
+    recorded honestly: the metadata served at the entityID is the unmodified Shibboleth installer artifact
+    — validUntil 2020-01-29, expired for six years, with no Organization or ContactPerson block and the
+    template placeholders still commented in. Federated consumers work from the CARSI/eduGAIN aggregate,
+    not from this endpoint.
+  humanURL: https://idp.zju.edu.cn/idp/shibboleth
+  baseURL: https://idp.zju.edu.cn/idp/
+  tags:
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - Single Sign-On
+  - eduGAIN
+  - CARSI
+  properties:
+  - type: IdentityFederation
+    url: https://idp.zju.edu.cn/idp/shibboleth
+  - type: Metadata
+    url: identity-federation/zhejiang-idp-saml-metadata.xml
+  - type: IdentityFederation
+    url: identity-federation/zhejiang-identity-federation.yml
+  - type: Conformance
+    url: conformance/zhejiang-education-standards.yml
+  - type: Authentication
+    url: authentication/zhejiang-authentication.yml
+- aid: zhejiang:sso
+  name: Unified Identity Authentication (CAS / SSO)
+  x-operator: institution
+  x-operator-basis: Host zjuam.zju.edu.cn is under zju.edu.cn, ZJU's own registrable domain.
+  description: >-
+    ZJU's unified identity authentication platform — a Central Authentication Service (CAS) single sign-on
+    login fronting campus systems. It supports username/password, QR-code scanning and third-party hand-off
+    (DingTalk, QQ, WeChat, and Azure/Microsoft for the international campus). Interactive web login only:
+    no service-registration endpoint, no published API contract and no developer documentation are reachable
+    unauthenticated. Recorded as an institution-operated surface, not as a consumable API.
+  humanURL: https://zjuam.zju.edu.cn/cas/login?locale=en
+  baseURL: https://zjuam.zju.edu.cn/cas/
+  tags:
+  - Identity
+  - Single Sign-On
+  - Authentication
+  - CAS
+  properties:
+  - type: Authentication
+    url: https://zjuam.zju.edu.cn/cas/login?locale=en
+  - type: Authentication
+    url: authentication/zhejiang-authentication.yml
+  - type: Scopes
+    url: scopes/zhejiang-scopes.yml
+- aid: zhejiang:zhejiang-catalog-api
+  name: Zhejiang University Catalog API
+  description: The machine-readable mirror service catalog.
+  humanURL: https://mirrors.zju.edu.cn/
+  baseURL: https://mirrors.zju.edu.cn
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/zhejiang-catalog-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/zhejiang-mirrorz-document.json
+  - type: Examples
+    url: examples/zhejiang-mirrorz-example.json
+  - type: APIReference
+    url: https://mirrors.zju.edu.cn/mirrorz.json
+  - type: Documentation
+    url: https://mirrors.zju.edu.cn/docs/
+  - type: Support
+    url: https://github.com/ZJUSCT/mirror-issues
+  - type: Errors
+    url: errors/zhejiang-errors.yml
+  - type: Vocabulary
+    url: vocabulary/zhejiang-vocabulary.yml
+  - type: Lifecycle
+    url: lifecycle/zhejiang-lifecycle.yml
+- aid: zhejiang:zhejiang-repositories-api
+  name: Zhejiang University Repositories API
+  description: The mirrored package/distribution trees themselves.
+  humanURL: https://mirrors.zju.edu.cn/
+  baseURL: https://mirrors.zju.edu.cn
+  tags:
+  - Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/zhejiang-repositories-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/zhejiang-mirrorz-document.json
+  - type: Examples
+    url: examples/zhejiang-mirrorz-example.json
+  - type: APIReference
+    url: https://mirrors.zju.edu.cn/mirrorz.json
+  - type: Documentation
+    url: https://mirrors.zju.edu.cn/docs/
+  - type: Support
+    url: https://github.com/ZJUSCT/mirror-issues
+  - type: Errors
+    url: errors/zhejiang-errors.yml
+  - type: Vocabulary
+    url: vocabulary/zhejiang-vocabulary.yml
+  - type: Lifecycle
+    url: lifecycle/zhejiang-lifecycle.yml
 common:
   - type: Website
     url: https://www.zju.edu.cn/english/
