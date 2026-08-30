@@ -1,0 +1,56 @@
+# Zhejiang University — vocabulary of the institution-operated surfaces
+generated: '2026-08-19'
+method: derived
+source: >-
+  Derived from https://mirrors.zju.edu.cn/mirrorz.json (live 2026-08-19) and the
+  SAML metadata at https://idp.zju.edu.cn/idp/shibboleth. No vendor vocabulary is
+  included; nothing here is copied from a platform contract running under ZJU's name.
+x-operator: institution
+terms:
+  - term: mirror
+    definition: One mirrored upstream software repository served by mirrors.zju.edu.cn.
+    source_field: mirrors[]
+    example: CPAN
+  - term: cname
+    definition: The canonical short name of a mirrored repository; also its path segment.
+    source_field: mirrors[].cname
+  - term: upstream
+    definition: >-
+      The remote source a mirrored repository synchronises from. ZJU's upstreams are
+      predominantly other Chinese university mirrors (e.g. rsync://mirrors.tuna.tsinghua.edu.cn/).
+    source_field: mirrors[].upstream
+  - term: status token
+    definition: >-
+      A compact sync-state string. Leading letter is the state (S success, Y syncing,
+      F failed, P paused, C cached, R redirect, U unknown); the X/N/O suffixes carry
+      Unix timestamps for last success, next scheduled run and last attempt.
+    source_field: mirrors[].status
+    grammar: ^(([SYFP]\d*)|[CRU])([XNO]\d+)*$
+  - term: site
+    definition: Identity block for the mirror site — URL, abbreviation, name, maintainer contact, issue tracker.
+    source_field: site
+  - term: category view
+    definition: >-
+      The MirrorZ os/app/font grouping used for browsing. Present in ZJU's document
+      but served empty.
+    source_field: info
+  - term: entityID
+    definition: >-
+      The globally unique SAML identifier for ZJU's Identity Provider,
+      https://idp.zju.edu.cn/idp/shibboleth. This is the string a federation partner
+      registers to trust ZJU accounts.
+    source: https://idp.zju.edu.cn/idp/shibboleth
+  - term: SingleSignOnService
+    definition: A SAML endpoint at which a service provider may initiate authentication against ZJU.
+    source: EntityDescriptor/IDPSSODescriptor
+  - term: AttributeAuthority
+    definition: >-
+      The SAML component that answers AttributeQuery over SOAP on port 8443, releasing
+      user attributes to trusted partners.
+    source: EntityDescriptor/AttributeAuthorityDescriptor
+excluded:
+  - reason: >-
+      No vendor vocabulary is recorded under this institution. The library catalog
+      (Huiwen OPAC), the undergraduate teaching platform (zdbk / jwglxt) and the
+      faculty profile system are vendor software running on ZJU hosts; their terms
+      belong to the vendors, not to Zhejiang University.

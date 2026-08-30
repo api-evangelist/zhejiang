@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/zhejiang/main/json-schema/zhejiang-mirrorz-document.json",
+  "title": "Zhejiang University MirrorZ catalog document",
+  "description": "Schema for the document served at https://mirrors.zju.edu.cn/mirrorz.json. Derived by API Evangelist from the live 2026-08-19 response, reconciled against the upstream MirrorZ data contract (mirrorz-org/mirrorz-schema, mirrorz.json/1.5). ZJU self-declares version 1.7, which is above the upstream published schema's 1.5 bound, so the version constraint is relaxed here rather than copied.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": [
+      "https://mirrors.zju.edu.cn/mirrorz.json",
+      "https://raw.githubusercontent.com/mirrorz-org/mirrorz-schema/master/schemas/mirrorz.json/1.5/mirrorz.schema.json"
+    ],
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["site", "info", "mirrors"],
+  "properties": {
+    "version": {
+      "type": "number",
+      "description": "MirrorZ data contract version declared by the site.",
+      "minimum": 1.5,
+      "examples": [1.7]
+    },
+    "site": { "$ref": "#/$defs/Site" },
+    "info": {
+      "type": "array",
+      "description": "Category view of services. Served as an empty array by ZJU as of 2026-08-19.",
+      "items": { "$ref": "#/$defs/InfoEntry" }
+    },
+    "mirrors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Mirror" }
+    }
+  },
+  "$defs": {
+    "Site": {
+      "type": "object",
+      "required": ["url", "abbr"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "logo": { "type": "string", "format": "uri" },
+        "logo_darkmode": { "type": "string", "format": "uri" },
+        "abbr": { "type": "string" },
+        "name": { "type": "string" },
+        "homepage": { "type": "string", "format": "uri" },
+        "issue": { "type": "string" },
+        "request": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "group": { "type": "string" },
+        "disk": { "type": "string" },
+        "note": { "type": "string" },
+        "big": { "type": "string" }
+      }
+    },
+    "InfoEntry": {
+      "type": "object",
+      "required": ["category", "distro", "urls"],
+      "properties": {
+        "category": { "type": "string", "enum": ["os", "app", "font"] },
+        "distro": { "type": "string" },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "url"],
+            "properties": {
+              "name": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "Mirror": {
+      "type": "object",
+      "required": ["cname", "url", "status"],
+      "properties": {
+        "cname": { "type": "string" },
+        "desc": { "type": "string" },
+        "url": { "type": "string" },
+        "status": {
+          "type": "string",
+          "pattern": "^(([SYFP]\\d*)|[CRU])([XNO]\\d+)*$",
+          "description": "Sync status token; all 63 ZJU entries matched this grammar on 2026-08-19."
+        },
+        "help": { "type": "string" },
+        "upstream": { "type": "string" },
+        "size": { "type": "string" }
+      }
+    }
+  }
+}

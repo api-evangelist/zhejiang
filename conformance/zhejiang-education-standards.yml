@@ -1,0 +1,146 @@
+# Zhejiang University — domain standard conformance (Kin Score `education` regime)
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of institution-owned hosts on 2026-08-19; every claim below points at
+  a URL that was fetched and its status code recorded. Reward-only: standards with no
+  evidence are recorded as not_found, never inferred.
+x-operator: institution
+conformance:
+  - standard: shibboleth
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://idp.zju.edu.cn/idp/shibboleth
+        status: 200
+        content_type: application/xml;charset=UTF-8
+        bytes: 14402
+        detail: >-
+          Shibboleth IdP SAML 2.0 metadata served at the entityID itself.
+          entityID="https://idp.zju.edu.cn/idp/shibboleth". Contains IDPSSODescriptor
+          and AttributeAuthorityDescriptor, both Shibboleth-specific profiles.
+      - url: https://idp.zju.edu.cn/idp/profile/Shibboleth/SSO
+        status: advertised
+        detail: >-
+          SingleSignOnService with Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest"
+          — the Shibboleth-native binding, declared in the metadata above.
+    location: EntityDescriptor/IDPSSODescriptor
+    federation_registration:
+      registry: eduGAIN (via CARSI, https://www.carsi.edu.cn)
+      entityid: https://idp.zju.edu.cn/idp/shibboleth
+      edugain_id: '671741'
+      display_name: Zhejiang University / 浙江大学(Zhejiang University)
+      scopes: zju.edu.cn
+      first_seen: '2020-01-31 13:33:41'
+      evidence:
+        - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+          status: 200
+          detail: >-
+            13,155 entities; ZJU's IdP present with regauth https://www.carsi.edu.cn,
+            federation code CARSI, roles IDPSSODescriptor and AttributeAuthorityDescriptor.
+    caveat: >-
+      The metadata served at ZJU's own entityID carries validUntil="2020-01-29T02:51:52.921Z"
+      and is the unmodified Shibboleth installer artifact — no Organization block, no
+      ContactPerson block, template placeholders intact. Conformance is credited on the
+      protocol implementation, which is real and federated; the published document itself
+      is expired and uncustomised. See identity-federation/zhejiang-identity-federation.yml.
+  - standard: saml
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://idp.zju.edu.cn/idp/shibboleth
+        status: 200
+        detail: >-
+          SAML 2.0 metadata. SingleSignOnService endpoints for HTTP-POST,
+          HTTP-POST-SimpleSign and HTTP-Redirect bindings; SingleLogoutService for
+          Redirect, POST, POST-SimpleSign and SOAP; ArtifactResolutionService for
+          SAML 1.0 and SAML 2.0 SOAP; AttributeService (AttributeQuery) for SAML 1.0
+          and 2.0 SOAP on port 8443. KeyDescriptor present.
+      - url: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SSO
+        status: 400
+        detail: >-
+          Live endpoint. 400 is the correct response to a bare GET with no SAMLRequest —
+          a positive liveness signal, not a failure.
+    location: EntityDescriptor/IDPSSODescriptor/SingleSignOnService
+  - standard: oai-pmh
+    status: not_found
+    operator: unknown
+    evidence:
+      - url: https://libweb.zju.edu.cn/oai?verb=Identify
+        status: 200
+        detail: >-
+          SOFT-404. Redirects to /oai/main.psp and returns the library CMS error page
+          "访问地址无效，oai找不到对应的栏目" (invalid address, no matching section). HTML, not
+          OAI-PMH XML. NOT credited as an OAI-PMH surface.
+      - url: https://oai.zju.edu.cn
+        status: NXDOMAIN
+      - url: https://ir.zju.edu.cn
+        status: NXDOMAIN
+      - url: https://repository.zju.edu.cn
+        status: NXDOMAIN
+  - standard: scim
+    status: not_found
+    operator: unknown
+    evidence:
+      - url: https://api.zju.edu.cn
+        status: NXDOMAIN
+      - url: https://developer.zju.edu.cn
+        status: NXDOMAIN
+  - standard: lti
+    status: not_found
+    operator: unknown
+    evidence:
+      - url: https://open.zju.edu.cn/
+        status: 200
+        detail: Redirects to /login; SPA shell with an empty <title> and no public LTI advertisement.
+  - standard: oneroster
+    status: not_found
+    operator: unknown
+  - standard: ed-fi
+    status: not_found
+    operator: unknown
+  - standard: caliper
+    status: not_found
+    operator: unknown
+  - standard: qti
+    status: not_found
+    operator: unknown
+  - standard: orcid
+    status: not_found
+    operator: unknown
+    evidence:
+      - url: https://person.zju.edu.cn/index/
+        status: 200
+        detail: >-
+          Faculty profile SPA; served shell only, empty <title>, no ORCID identifiers
+          exposed to an unauthenticated fetch. Not credited.
+  - standard: datacite
+    status: not_found
+    operator: unknown
+    detail: No institution-operated research data repository or DOI minting surface found on zju.edu.cn.
+  - standard: crossref
+    status: not_found
+    operator: unknown
+other_standards:
+  - standard: mirrorz-data-contract
+    version_declared: '1.7'
+    status: conformant_with_deviation
+    operator: institution
+    evidence:
+      - url: https://mirrors.zju.edu.cn/mirrorz.json
+        status: 200
+        detail: >-
+          Validated against mirrorz-org/mirrorz-schema schemas/mirrorz.json/1.5.
+          site.url and site.abbr present; all 63 mirrors[] entries carry the required
+          cname/url/status and every status token matches the published grammar
+          ^(([SYFP]\d*)|[CRU])([XNO]\d+)*$.
+      - url: https://raw.githubusercontent.com/mirrorz-org/mirrorz-schema/master/schemas/mirrorz.json/1.5/mirrorz.schema.json
+        status: 200
+    deviations:
+      - >-
+        Declares version 1.7; the upstream published schema constrains version to
+        exactly 1.5. The 1.7 schema is not published upstream, so strict validation
+        against 1.5 fails on the version bound alone.
+      - >-
+        `info` (the category view) is present but served as an empty array, so the
+        MirrorZ category browse is unpopulated for this site.

@@ -1,0 +1,91 @@
+# Zhejiang University — authentication posture across institution-operated surfaces
+generated: '2026-08-19'
+method: probed
+source: Live probes 2026-08-19 of zju.edu.cn hosts; no vendor documentation was used.
+x-operator: institution
+summary: >-
+  ZJU runs two institution-operated authentication surfaces — a CAS single sign-on
+  platform and a Shibboleth SAML 2.0 Identity Provider — and one institution-operated
+  public service that requires no authentication at all (the open source mirror).
+  There is no OAuth 2.0 authorization server, no API key issuance, and no developer
+  self-service credential flow anywhere on the public zju.edu.cn surface.
+surfaces:
+  - name: Unified Identity Authentication (CAS)
+    x-operator: institution
+    host: zjuam.zju.edu.cn
+    type: CAS
+    protocol: Central Authentication Service (web SSO)
+    public_registration: false
+    machine_readable_metadata: false
+    evidence:
+      - url: https://zjuam.zju.edu.cn/cas/login?locale=en
+        status: 200
+        detail: >-
+          CAS login page, title "Unified identity authentication platform", bilingual
+          (zh-CN default, ?locale=en). Interactive login only — username/password,
+          QR-code scan and third-party IdP hand-off. No published API contract, no
+          service-registration endpoint reachable unauthenticated.
+  - name: Shibboleth Identity Provider
+    x-operator: institution
+    host: idp.zju.edu.cn
+    type: SAML2 IdP
+    entity_id: https://idp.zju.edu.cn/idp/shibboleth
+    machine_readable_metadata: true
+    metadata_url: https://idp.zju.edu.cn/idp/shibboleth
+    evidence:
+      - url: https://idp.zju.edu.cn/idp/shibboleth
+        status: 200
+        content_type: application/xml;charset=UTF-8
+        detail: SAML 2.0 EntityDescriptor, 14402 bytes, KeyDescriptor present.
+    endpoints:
+      single_sign_on:
+        - binding: urn:mace:shibboleth:1.0:profiles:AuthnRequest
+          location: https://idp.zju.edu.cn/idp/profile/Shibboleth/SSO
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+          location: https://idp.zju.edu.cn/idp/profile/SAML2/POST/SSO
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+          location: https://idp.zju.edu.cn/idp/profile/SAML2/POST-SimpleSign/SSO
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+          location: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SSO
+      single_logout:
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+          location: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SLO
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+          location: https://idp.zju.edu.cn/idp/profile/SAML2/POST/SLO
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+          location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/SLO
+      artifact_resolution:
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+          location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/ArtifactResolution
+        - binding: urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding
+          location: https://idp.zju.edu.cn:8443/idp/profile/SAML1/SOAP/ArtifactResolution
+      attribute_query:
+        - binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+          location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/AttributeQuery
+        - binding: urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding
+          location: https://idp.zju.edu.cn:8443/idp/profile/SAML1/SOAP/AttributeQuery
+    caveat: >-
+      The served metadata carries the stock Shibboleth "This is example metadata only"
+      banner, which the distribution ships and many production IdPs never strip. The
+      endpoints it advertises resolve to the live IdP, so the document is treated as
+      the operating entity descriptor while the banner is recorded as-is rather than
+      edited away.
+  - name: Open Source Software Mirror
+    x-operator: institution
+    host: mirrors.zju.edu.cn
+    type: none
+    public_registration: not_applicable
+    evidence:
+      - url: https://mirrors.zju.edu.cn/mirrorz.json
+        status: 200
+        detail: >-
+          Anonymous read. No Authorization header required, no WWW-Authenticate on the
+          response, no API key parameter. Response headers observed: server, date,
+          content-type, content-length, last-modified, etag, x-storage, accept-ranges.
+          No CORS header (Access-Control-Allow-Origin absent) — browser-side
+          cross-origin consumption is therefore blocked.
+not_found:
+  - oauth2_authorization_server
+  - openid_connect_discovery
+  - api_key_issuance
+  - developer_self_service_portal

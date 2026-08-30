@@ -1,0 +1,23 @@
+# Zhejiang University — authorization scopes
+generated: '2026-08-19'
+method: probed
+source: Live probes 2026-08-19 of zju.edu.cn hosts.
+x-operator: institution
+scopes: []
+finding: >-
+  No scope vocabulary exists on any institution-operated ZJU surface. The public
+  mirror service is unauthenticated and therefore has no scopes. The CAS SSO platform
+  and the Shibboleth IdP are federation surfaces, not OAuth authorization servers:
+  Shibboleth expresses release policy as SAML attribute release, not as scopes, and
+  the attribute-release policy is not published on the public metadata endpoint.
+  No OAuth 2.0 authorization server, discovery document, or scope list was found.
+probes:
+  - url: https://idp.zju.edu.cn/idp/shibboleth
+    status: 200
+    detail: SAML metadata; no scope vocabulary. AttributeService advertised, policy not published.
+  - url: https://zjuam.zju.edu.cn/cas/login?locale=en
+    status: 200
+    detail: CAS interactive login; no scope model.
+  - url: https://mirrors.zju.edu.cn/mirrorz.json
+    status: 200
+    detail: Anonymous read; no authorization layer.

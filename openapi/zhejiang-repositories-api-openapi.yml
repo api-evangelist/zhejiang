@@ -1,0 +1,52 @@
+openapi: 3.2.0
+info:
+  title: Zhejiang University Open Source Software Mirror Service Repositories API
+  version: '1.7'
+  summary: Read-only HTTP service catalog and file distribution for the ZJU open source mirror.
+  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain. The mirror publishes a machine-readable service catalog at /mirrorz.json implementing the MirrorZ data contract (self-declared version 1.7), listing every mirrored repository with its path, sync status token, upstream source, on-disk size and documentation link. The repositories themselves are served as ordinary anonymous HTTPS directory trees. This description was DERIVED by API Evangelist from the live response and the upstream MirrorZ JSON Schema; ZJU does not publish an OpenAPI description of this service.
+  contact:
+    name: ZJU Mirror maintainers (ZJU Supercomputing Team)
+    email: mirrors@zju.edu.cn
+    url: https://github.com/ZJUSCT/mirror-issues/issues
+  x-operator: institution
+  x-operator-basis: Host mirrors.zju.edu.cn is under the institution's own registrable domain zju.edu.cn; the document's own site.email is mirrors@zju.edu.cn.
+  x-provenance:
+    method: derived
+    generated: '2026-08-19'
+    source: https://mirrors.zju.edu.cn/mirrorz.json
+servers:
+- url: https://mirrors.zju.edu.cn
+  description: Production mirror site (nginx, HTTP/2, IPv4 + IPv6)
+tags:
+- name: Repositories
+  description: The mirrored package/distribution trees themselves.
+paths:
+  /{mirror}/:
+    get:
+      tags:
+      - Repositories
+      operationId: browseMirrorTree
+      summary: Browse a mirrored repository tree
+      description: 'Each entry in the catalog''s `mirrors[].url` resolves to an anonymous HTTPS directory tree. Responses are HTML autoindexes or the upstream project''s own index page; individual files are served with Accept-Ranges: bytes. Verified 2026-08-19: GET /CPAN/ returned 200 text/html; GET /nonexistent-xyz/ returned a genuine nginx 404 (negative probe passed — this host does not soft-404).'
+      security: []
+      parameters:
+      - name: mirror
+        in: path
+        required: true
+        description: The repository path segment, e.g. `CPAN`, `debian`, `pypi`.
+        schema:
+          type: string
+        example: CPAN
+      responses:
+        '200':
+          description: Directory index or upstream index page.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: No such mirrored repository.
+          content:
+            text/html:
+              schema:
+                type: string

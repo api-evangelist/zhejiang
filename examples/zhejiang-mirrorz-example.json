@@ -1,0 +1,97 @@
+{
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "searched",
+    "source": "https://mirrors.zju.edu.cn/mirrorz.json",
+    "note": "Verbatim excerpt of the live 200 response captured 2026-08-19T22:05Z. site and info are complete; mirrors[] is truncated to the first 8 of 63 entries. x-operator: institution."
+  },
+  "version": 1.7,
+  "site": {
+    "url": "https://mirrors.zju.edu.cn",
+    "logo": "https://mirrors.zju.edu.cn/zju-falcon.svg",
+    "abbr": "ZJU",
+    "name": "浙江大学开源软件镜像站",
+    "homepage": "https://www.zjusct.io",
+    "request": "https://github.com/ZJUSCT/mirror-issues/issues",
+    "email": "mirrors@zju.edu.cn"
+  },
+  "info": [],
+  "mirrors": [
+    {
+      "cname": "CPAN",
+      "desc": "Perl 语言模块仓库",
+      "url": "/CPAN",
+      "status": "S1787153767X1787182567",
+      "help": "/docs/CPAN/",
+      "upstream": "rsync://mirrors.tuna.tsinghua.edu.cn/CPAN/",
+      "size": "37.6 GiB"
+    },
+    {
+      "cname": "CRAN",
+      "desc": "R 语言的可执行文件、源代码和说明文件，以及用户撰写的软件包",
+      "url": "/CRAN",
+      "status": "S1787169840X1787198640",
+      "help": "/docs/CRAN/",
+      "upstream": "rsync://mirrors.tuna.tsinghua.edu.cn/CRAN/",
+      "size": "656.7 GiB"
+    },
+    {
+      "cname": "CTAN",
+      "desc": "TeX 的各种发行版、软件包和文档",
+      "url": "/CTAN",
+      "status": "S1787149674X1787178474",
+      "help": "/docs/CTAN/",
+      "upstream": "rsync://mirrors.tuna.tsinghua.edu.cn/CTAN/",
+      "size": "62.5 GiB"
+    },
+    {
+      "cname": "almalinux",
+      "desc": "Enterprise Linux 兼容发行版",
+      "url": "/almalinux",
+      "status": "S1787170476X1787199276",
+      "help": "/docs/almalinux/",
+      "upstream": "rsync://rsync.repo.almalinux.org/almalinux/",
+      "size": "1.4 TiB"
+    },
+    {
+      "cname": "alpine",
+      "desc": "基于 musl libc 和 busybox 的安全、轻量 Linux 发行版",
+      "url": "/alpine",
+      "status": "S1787175864X1787204664",
+      "help": "/docs/alpine/",
+      "upstream": "rsync://mirrors.tuna.tsinghua.edu.cn/alpine/",
+      "size": "5.2 TiB"
+    },
+    {
+      "cname": "anaconda",
+      "desc": "科学计算工具包",
+      "url": "/anaconda",
+      "status": "F1787176242O1787146242X1787205042",
+      "help": "/docs/anaconda/",
+      "upstream": "rsync://mirrors.nju.edu.cn/anaconda/",
+      "size": "26.7 TiB"
+    },
+    {
+      "cname": "anaconda-r",
+      "desc": "经反向代理提供的 Anaconda channel 补充镜像",
+      "url": "/anaconda-r",
+      "status": "S1787101463X1787187863",
+      "help": "/docs/anaconda-r/",
+      "upstream": "https://conda.anaconda.org/",
+      "size": "503.3 GiB"
+    },
+    {
+      "cname": "anolis",
+      "desc": "支持多架构的开源 Linux 操作系统发行版",
+      "url": "/anolis",
+      "status": "S1787144282X1787230682",
+      "help": "/docs/anolis/",
+      "upstream": "rsync://rsync.openanolis.cn/anolis",
+      "size": "5.7 TiB"
+    }
+  ],
+  "x-truncated": {
+    "mirrors_total": 63,
+    "mirrors_included": 8
+  }
+}

@@ -1,0 +1,48 @@
+# Zhejiang University — governance rules observed
+x-generated: '2026-08-19'
+x-method: probed
+x-source: Live probes 2026-08-19 of zju.edu.cn hosts.
+x-operator: institution
+x-published_rules: []
+x-finding: >-
+  Zhejiang University publishes no API design guide, style guide, governance policy,
+  linting ruleset or developer terms of service on its public surface. There is no
+  central developer portal to carry one. The only rule-shaped artefacts found are
+  the mirror site's robots.txt and the upstream MirrorZ data contract, neither of
+  which is an API governance document authored by ZJU.
+x-observed:
+  - artifact: robots.txt
+    url: https://mirrors.zju.edu.cn/robots.txt
+    status: 200
+    bytes: 1847
+    detail: >-
+      Disallows crawler traversal of roughly forty mirrored repository trees
+      (/ubuntu, /debian, /pypi, /kali, /archlinux, /rocky, /opensuse, /ros, /ros2,
+      /rustup, /qt, /llvm-apt, /manjaro, /msys2, /openeuler, /termux and others).
+      A crawl-control artefact, not a governance rule. Opens with an ASCII-art banner.
+  - artifact: MirrorZ data contract
+    url: https://raw.githubusercontent.com/mirrorz-org/mirrorz-schema/master/schemas/mirrorz.json/1.5/mirrorz.schema.json
+    status: 200
+    x-operator: vendor
+    detail: >-
+      The schema ZJU's catalog implements is authored by the MirrorZ project, not by
+      ZJU. Recorded here as the external contract ZJU conforms to, and deliberately
+      NOT credited as ZJU governance.
+x-not_found:
+  - api_design_guide
+  - style_guide
+  - spectral_or_lint_ruleset
+  - developer_terms_of_service
+  - deprecation_policy
+  - versioning_policy
+  - security_txt
+  - llms_txt
+x-probes:
+  - url: https://www.zju.edu.cn/robots.txt
+    status: 404
+  - url: https://www.zju.edu.cn/.well-known/security.txt
+    status: 404
+  - url: https://www.zju.edu.cn/llms.txt
+    status: 404
+  - url: https://mirrors.zju.edu.cn/.well-known/security.txt
+    status: 404

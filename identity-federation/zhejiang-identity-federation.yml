@@ -1,0 +1,185 @@
+specification: API Evangelist Identity Federation
+specificationVersion: '0.1'
+provider: Zhejiang University
+providerId: zhejiang
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live fetch of https://idp.zju.edu.cn/idp/shibboleth (SAML 2.0 EntityDescriptor,
+  HTTP 200, application/xml;charset=UTF-8, 14,402 bytes) plus the eduGAIN technical
+  database entity list https://technical.edugain.org/api.php?action=list_entities&format=json
+  (HTTP 200, 7,784,457 bytes, 13,155 entities), searched for entityIDs under zju.edu.cn.
+description: >-
+  Zhejiang University's SAML 2.0 identity federation surface. This is the institution's
+  only interfederated, third-party-registered, machine-readable contract: a Shibboleth
+  Identity Provider under ZJU's own registrable domain, registered in CARSI (the CERNET
+  Authentication and Resource Sharing Infrastructure, China's national research and
+  education federation) and reachable through eduGAIN. Unlike the library catalog, the
+  undergraduate teaching platform and the faculty profile system — all vendor software
+  operating on ZJU hostnames — the IdP is operated by ZJU and the metadata describes
+  ZJU's own infrastructure. The one caveat is significant and recorded below: the
+  metadata ZJU serves at its own entityID is the stock Shibboleth installer artifact,
+  never customised and expired since 2020-01-29, so the authoritative description of
+  this entity is the CARSI/eduGAIN aggregate rather than the institution's own endpoint.
+
+federation:
+  name: CERNET Authentication and Resource Sharing Infrastructure
+  abbreviation: CARSI
+  registration_authority: https://www.carsi.edu.cn
+  federation_code: CARSI
+  country: China
+  interfederation: eduGAIN
+  interfederation_database: https://technical.edugain.org/entities?fed_id=CARSI
+  aggregate: https://mds.edugain.org/edugain-v2.xml
+  aggregate_status: 200
+  probed: '2026-08-19'
+  registry_record:
+    edugain_id: '671741'
+    entityid: https://idp.zju.edu.cn/idp/shibboleth
+    display_name_en: Zhejiang University
+    display_name_zh: 浙江大学(Zhejiang University)
+    scopes: zju.edu.cn
+    roles: IDPSSODescriptor, AttributeAuthorityDescriptor
+    first_seen: '2020-01-31 13:33:41'
+    eccs_status: '3'
+    sirtfi_status: '0'
+    coco_status: null
+    detail: >-
+      Sirtfi (Security Incident Response Trust Framework for Federated Identity) is NOT
+      asserted, and no GEANT Data Protection Code of Conduct entity category is present.
+      Both are voluntary; their absence is recorded as measured, not judged.
+  peer_context:
+    carsi_registered_entities: 1042
+    detail: >-
+      Counted from the same eduGAIN list. ZJU is one of over a thousand entities CARSI
+      registers into eduGAIN, the majority of them Chinese university IdPs and the
+      publisher SPs they federate with.
+
+identity_provider:
+  entityID: https://idp.zju.edu.cn/idp/shibboleth
+  x-operator: institution
+  operator_basis: >-
+    Host idp.zju.edu.cn is under zju.edu.cn, Zhejiang University's own registrable
+    domain, and eduGAIN's registry names the entity "Zhejiang University" with scope
+    zju.edu.cn under the CARSI registration authority.
+  metadata_url: https://idp.zju.edu.cn/idp/shibboleth
+  metadata_status: 200
+  metadata_content_type: application/xml;charset=UTF-8
+  metadata_bytes: 14402
+  local_copy: identity-federation/zhejiang-idp-saml-metadata.xml
+  software: Shibboleth IdP
+  scope: zju.edu.cn
+  protocol_support:
+    idp_sso_descriptor:
+      - urn:oasis:names:tc:SAML:2.0:protocol
+      - urn:oasis:names:tc:SAML:1.1:protocol
+      - urn:mace:shibboleth:1.0
+    attribute_authority_descriptor:
+      - urn:oasis:names:tc:SAML:1.1:protocol
+  organization_block: absent
+  contact_person_block: absent
+  key_descriptors:
+    - use: signing
+      subject: CN=idp.zju.edu.cn
+      issuer: CN=idp.zju.edu.cn (self-signed, as is normal for SAML metadata keys)
+      not_before: '2020-01-29T02:51:49Z'
+      not_after: '2040-01-29T02:51:49Z'
+      sha256_fingerprint: 2E:F4:DC:9A:25:67:CA:E2:81:68:9B:11:F7:D5:FA:C3:25:A7:40:8E:B7:D7:A9:55:8A:B7:5D:FA:B7:14:0D:D3
+    - use: signing/encryption
+      subject: CN=idp.zju.edu.cn
+      not_before: '2020-01-29T02:51:50Z'
+      not_after: '2040-01-29T02:51:50Z'
+      sha256_fingerprint: 79:BD:7F:88:29:03:C6:4F:64:BD:97:88:D6:2C:77:27:78:8D:0A:EB:FD:C1:20:F5:D2:FF:BA:D0:46:40:4F:A6
+    - use: encryption
+      subject: CN=idp.zju.edu.cn
+      not_before: '2020-01-29T02:51:51Z'
+      not_after: '2040-01-29T02:51:51Z'
+      sha256_fingerprint: E0:61:E2:61:D1:C5:41:DB:66:43:79:56:C0:0F:20:FF:35:28:D8:85:14:B5:42:3F:3F:AB:C0:56:C5:3A:DA:B5
+  endpoints:
+    - service: SingleSignOnService
+      binding: urn:mace:shibboleth:1.0:profiles:AuthnRequest
+      location: https://idp.zju.edu.cn/idp/profile/Shibboleth/SSO
+    - service: SingleSignOnService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/POST/SSO
+    - service: SingleSignOnService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/POST-SimpleSign/SSO
+    - service: SingleSignOnService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SSO
+      probed_status: 400
+      probed_detail: Correct 400 for a bare GET with no SAMLRequest — a liveness signal.
+    - service: SingleLogoutService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SLO
+    - service: SingleLogoutService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/POST/SLO
+    - service: SingleLogoutService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+      location: https://idp.zju.edu.cn/idp/profile/SAML2/POST-SimpleSign/SLO
+    - service: SingleLogoutService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+      location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/SLO
+    - service: ArtifactResolutionService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+      location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/ArtifactResolution
+    - service: ArtifactResolutionService
+      binding: urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding
+      location: https://idp.zju.edu.cn:8443/idp/profile/SAML1/SOAP/ArtifactResolution
+    - service: AttributeService
+      binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+      location: https://idp.zju.edu.cn:8443/idp/profile/SAML2/SOAP/AttributeQuery
+    - service: AttributeService
+      binding: urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding
+      location: https://idp.zju.edu.cn:8443/idp/profile/SAML1/SOAP/AttributeQuery
+
+findings:
+  - id: metadata-expired
+    severity: high
+    detail: >-
+      The document served at the entityID carries validUntil="2020-01-29T02:51:52.921Z".
+      It has been expired for more than six years. A strict SAML consumer that fetches
+      metadata directly from this endpoint and honours validUntil will reject it. The
+      federated path works because CARSI republishes the entity into the eduGAIN
+      aggregate; the institution's own endpoint does not carry a usable contract.
+  - id: stock-installer-artifact
+    severity: high
+    detail: >-
+      The file is the unmodified Shibboleth IdP installer output. It still opens with the
+      distribution's "This is example metadata only. Do *NOT* supply it as is without
+      review" banner, and still contains the commented-out template placeholders
+      "A Name for the IdP at idp.zju.edu.cn" and "Enter a description of your IdP at
+      idp.zju.edu.cn". No Organization block and no ContactPerson block were ever filled
+      in, so the metadata carries no institutional identity, no support contact and no
+      security contact.
+  - id: legacy-protocol-retained
+    severity: medium
+    detail: >-
+      SAML 1.1 and urn:mace:shibboleth:1.0 remain in the IDPSSODescriptor's
+      protocolSupportEnumeration, and the AttributeAuthorityDescriptor advertises SAML 1.1
+      only. Superseded protocol generations are still advertised with no published
+      deprecation notice.
+  - id: no-sirtfi
+    severity: low
+    detail: >-
+      eduGAIN records sirtfi_status 0 and no Code of Conduct entity category for this
+      entity. Both are voluntary trust-framework assertions that peers increasingly
+      require.
+
+verified_2026_08_19:
+  - url: https://idp.zju.edu.cn/idp/shibboleth
+    status: 200
+  - url: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SSO
+    status: 400
+  - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+    status: 200
+  - url: https://technical.edugain.org/entities?fed_id=CARSI
+    status: 200
+  - url: https://mds.edugain.org/edugain-v2.xml
+    status: 200
+  - url: https://www.carsi.edu.cn/
+    status: 200
+  - url: https://ds.carsi.edu.cn/
+    status: 200

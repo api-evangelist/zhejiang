@@ -1,0 +1,60 @@
+# Zhejiang University — lifecycle posture of institution-operated surfaces
+generated: '2026-08-19'
+method: probed
+source: Live probes 2026-08-19 of zju.edu.cn hosts.
+x-operator: institution
+summary: >-
+  ZJU publishes no versioning policy, no deprecation policy, no changelog and no
+  status page for any institution-operated surface. Version signalling exists in
+  exactly one place — the mirror catalog's self-declared data-contract version — and
+  it is the version of someone else's contract, not of a ZJU API.
+surfaces:
+  - name: Open Source Software Mirror
+    x-operator: institution
+    url: https://mirrors.zju.edu.cn/mirrorz.json
+    version_signal: '1.7'
+    version_signal_kind: external_data_contract_version
+    versioning_scheme: none_of_its_own
+    deprecation_policy: not_published
+    changelog: not_published
+    status_page: not_published
+    freshness: >-
+      The document is regenerated per request — Last-Modified on the 2026-08-19 probe
+      equalled the request time. Per-repository freshness is carried inside each
+      status token rather than in an operational status page.
+    issue_channel:
+      url: https://github.com/ZJUSCT/mirror-issues
+      status: 200
+      detail: >-
+        Public GitHub issue tracker for the mirror, advertised by the catalog's own
+        site.request field. The only public change/feedback channel on any ZJU surface.
+  - name: Shibboleth Identity Provider
+    x-operator: institution
+    url: https://idp.zju.edu.cn/idp/shibboleth
+    version_signal: SAML 2.0 (plus SAML 1.0 profiles retained)
+    versioning_scheme: protocol_version_only
+    deprecation_policy: not_published
+    note: >-
+      SAML 1.0 ArtifactResolution and AttributeQuery endpoints are still advertised
+      alongside the SAML 2.0 ones. Retaining a superseded protocol generation without
+      a published deprecation note is the clearest lifecycle signal on the estate.
+  - name: Unified Identity Authentication (CAS)
+    x-operator: institution
+    url: https://zjuam.zju.edu.cn/cas/login?locale=en
+    version_signal: not_published
+    deprecation_policy: not_published
+  - name: Library catalog (OPAC)
+    x-operator: institution
+    url: https://opac.zju.edu.cn/
+    lifecycle_event: withdrawn_from_public_internet
+    status: 403
+    detail: >-
+      The 403 body states the OPAC has suspended public-internet service and directs
+      users to WebVPN or the mobile library. A real, dated lifecycle change announced
+      only in the error body of the thing being withdrawn.
+not_found:
+  - versioning_policy
+  - deprecation_policy
+  - sunset_headers
+  - changelog
+  - status_page

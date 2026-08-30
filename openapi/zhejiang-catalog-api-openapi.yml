@@ -1,0 +1,193 @@
+openapi: 3.2.0
+info:
+  title: Zhejiang University Open Source Software Mirror Service Catalog API
+  version: '1.7'
+  summary: Read-only HTTP service catalog and file distribution for the ZJU open source mirror.
+  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain. The mirror publishes a machine-readable service catalog at /mirrorz.json implementing the MirrorZ data contract (self-declared version 1.7), listing every mirrored repository with its path, sync status token, upstream source, on-disk size and documentation link. The repositories themselves are served as ordinary anonymous HTTPS directory trees. This description was DERIVED by API Evangelist from the live response and the upstream MirrorZ JSON Schema; ZJU does not publish an OpenAPI description of this service.
+  contact:
+    name: ZJU Mirror maintainers (ZJU Supercomputing Team)
+    email: mirrors@zju.edu.cn
+    url: https://github.com/ZJUSCT/mirror-issues/issues
+  x-operator: institution
+  x-operator-basis: Host mirrors.zju.edu.cn is under the institution's own registrable domain zju.edu.cn; the document's own site.email is mirrors@zju.edu.cn.
+  x-provenance:
+    method: derived
+    generated: '2026-08-19'
+    source: https://mirrors.zju.edu.cn/mirrorz.json
+servers:
+- url: https://mirrors.zju.edu.cn
+  description: Production mirror site (nginx, HTTP/2, IPv4 + IPv6)
+tags:
+- name: Catalog
+  description: The machine-readable mirror service catalog.
+paths:
+  /mirrorz.json:
+    get:
+      tags:
+      - Catalog
+      operationId: getMirrorCatalog
+      summary: Retrieve the MirrorZ service catalog for this site
+      description: 'Returns the full MirrorZ document for mirrors.zju.edu.cn — site identity, a category view (`info`, currently served empty), and one entry per mirrored repository. No authentication. Regenerated per request: Last-Modified tracks the request time. Verified 2026-08-19: 200, application/json, 18141 bytes, 63 mirrors.'
+      security: []
+      responses:
+        '200':
+          description: The MirrorZ document.
+          headers:
+            ETag:
+              description: Strong entity tag; observed on the live response.
+              schema:
+                type: string
+            Last-Modified:
+              description: Generation timestamp of the document.
+              schema:
+                type: string
+            Accept-Ranges:
+              description: Observed as `bytes`.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MirrorZDocument'
+              examples:
+                zju:
+                  $ref: '#/components/examples/ZjuCatalogExcerpt'
+        '404':
+          description: Not found (nginx default body).
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  examples:
+    ZjuCatalogExcerpt:
+      summary: Excerpt of the live 2026-08-19 response
+      externalValue: ../examples/zhejiang-mirrorz-example.json
+  schemas:
+    Mirror:
+      type: object
+      required:
+      - cname
+      - url
+      - status
+      properties:
+        cname:
+          type: string
+          description: Repository name.
+          example: CPAN
+        desc:
+          type: string
+          description: Human description, served in Chinese by this site.
+          example: Perl 语言模块仓库
+        url:
+          type: string
+          description: Site-relative or absolute URL to the repository tree.
+          example: /CPAN
+        status:
+          type: string
+          description: MirrorZ sync status token. Grammar `^(([SYFP]\d*)|[CRU])([XNO]\d+)*$` — leading letter is the sync state (S success, Y syncing, F failed, P paused, C cached, R redirect, U unknown), followed by Unix-timestamp-bearing suffixes (X last successful sync, N next scheduled sync, O last attempt).
+          pattern: ^(([SYFP]\d*)|[CRU])([XNO]\d+)*$
+          example: S1787153767X1787182567
+        help:
+          type: string
+          description: Path to the site's usage documentation for this repository.
+          example: /docs/CPAN/
+        upstream:
+          type: string
+          description: Upstream source this repository syncs from.
+          example: rsync://mirrors.tuna.tsinghua.edu.cn/CPAN/
+        size:
+          type: string
+          description: Human-readable on-disk size.
+          example: 37.6 GiB
+    InfoEntry:
+      type: object
+      required:
+      - category
+      - distro
+      - urls
+      properties:
+        category:
+          type: string
+          enum:
+          - os
+          - app
+          - font
+        distro:
+          type: string
+        urls:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - url
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+    MirrorZDocument:
+      type: object
+      required:
+      - site
+      - info
+      - mirrors
+      properties:
+        version:
+          type: number
+          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
+          example: 1.7
+        site:
+          $ref: '#/components/schemas/Site'
+        info:
+          type: array
+          description: Category view of services. ZJU serves this as an empty array.
+          items:
+            $ref: '#/components/schemas/InfoEntry'
+        mirrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mirror'
+    Site:
+      type: object
+      required:
+      - url
+      - abbr
+      properties:
+        url:
+          type: string
+          format: uri
+          example: https://mirrors.zju.edu.cn
+        logo:
+          type: string
+          format: uri
+        logo_darkmode:
+          type: string
+          format: uri
+        abbr:
+          type: string
+          example: ZJU
+        name:
+          type: string
+          example: 浙江大学开源软件镜像站
+        homepage:
+          type: string
+          format: uri
+          example: https://www.zjusct.io
+        issue:
+          type: string
+        request:
+          type: string
+          example: https://github.com/ZJUSCT/mirror-issues/issues
+        email:
+          type: string
+          example: mirrors@zju.edu.cn
+        group:
+          type: string
+        disk:
+          type: string
+        note:
+          type: string
+        big:
+          type: string

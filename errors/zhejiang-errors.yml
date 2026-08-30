@@ -1,0 +1,57 @@
+# Zhejiang University — error semantics observed on institution-operated surfaces
+generated: '2026-08-19'
+method: probed
+source: Live probes 2026-08-19, including deliberate negative probes.
+x-operator: institution
+summary: >-
+  ZJU publishes no error vocabulary. What follows is observed behaviour, recorded so
+  the absence of a documented error contract is a measurement rather than an assumption.
+  The mirror host returns honest status codes on negative probes; the library catalog
+  host returns a genuine 403 with a human-readable explanation; the library CMS
+  soft-404s, which is the one behaviour a consumer must defend against.
+observed:
+  - host: mirrors.zju.edu.cn
+    x-operator: institution
+    negative_probe: https://mirrors.zju.edu.cn/nonexistent-xyz/
+    status: 404
+    body_type: text/html (nginx default 404, 548 bytes)
+    soft_404: false
+    machine_readable_error: false
+    note: >-
+      Correct 404 on a path that does not exist. No JSON problem+details, no error
+      code vocabulary. A consumer must branch on the HTTP status alone.
+  - host: opac.zju.edu.cn
+    x-operator: institution
+    probe: https://opac.zju.edu.cn/
+    status: 403
+    body_type: text/html, 40063 bytes, title "OPAC提示"
+    soft_404: false
+    machine_readable_error: false
+    note: >-
+      403 carrying a full human-readable explanation in Chinese: the library catalog
+      has suspended public-internet service and on-campus users should reach it via
+      WebVPN or the ZJU DingTalk mobile library. This is a GATED surface, not a dead
+      one — the 403 is deliberate policy, correctly signalled.
+  - host: libweb.zju.edu.cn
+    x-operator: institution
+    probe: https://libweb.zju.edu.cn/oai?verb=Identify
+    status: 200
+    body_type: text/html error page
+    soft_404: true
+    machine_readable_error: false
+    note: >-
+      SOFT-404. The library CMS returns HTTP 200 with the body
+      "访问地址无效，oai找不到对应的栏目" for any unknown path. Status code alone cannot be
+      trusted on this host; the body must be read. This is why no OAI-PMH surface is
+      credited to ZJU.
+  - host: idp.zju.edu.cn
+    x-operator: institution
+    probe: https://idp.zju.edu.cn/idp/profile/SAML2/Redirect/SSO
+    status: 400
+    machine_readable_error: false
+    note: Correct 400 for a bare GET with no SAMLRequest parameter.
+not_found:
+  - documented_error_codes
+  - problem_details_rfc9457
+  - retry_guidance
+  - status_page
