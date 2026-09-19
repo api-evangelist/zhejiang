@@ -58,6 +58,18 @@ tags:
   - C9 League
   - Double First-Class
   - Identity Federation
+  - SSO
+  - Open Source Mirror
+  - Library
+tags_raw:
+  - University
+  - Higher Education
+  - Education
+  - Research
+  - China
+  - C9 League
+  - Double First-Class
+  - Identity Federation
   - Single Sign-On
   - Open Source Mirror
   - Library
@@ -155,6 +167,13 @@ apis:
   - Identity Federation
   - SAML
   - Shibboleth
+  - SSO
+  - eduGAIN
+  - CARSI
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - Shibboleth
   - Single Sign-On
   - eduGAIN
   - CARSI
@@ -182,6 +201,11 @@ apis:
   humanURL: https://zjuam.zju.edu.cn/cas/login?locale=en
   baseURL: https://zjuam.zju.edu.cn/cas/
   tags:
+  - Identity
+  - SSO
+  - Authentication
+  - CAS
+  tags_raw:
   - Identity
   - Single Sign-On
   - Authentication
