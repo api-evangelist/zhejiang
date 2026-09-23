@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Zhejiang University Open Source Software Mirror Service Repositories API
+  title: Zhejiang University Open Source Software Mirror Service…
   version: '1.7'
   summary: Read-only HTTP service catalog and file distribution for the ZJU open source mirror.
-  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain. The mirror publishes a machine-readable service catalog at /mirrorz.json implementing the MirrorZ data contract (self-declared version 1.7), listing every mirrored repository with its path, sync status token, upstream source, on-disk size and documentation link. The repositories themselves are served as ordinary anonymous HTTPS directory trees. This description was DERIVED by API Evangelist from the live response and the upstream MirrorZ JSON Schema; ZJU does not publish an OpenAPI description of this service.
+  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain.
   contact:
     name: ZJU Mirror maintainers (ZJU Supercomputing Team)
     email: mirrors@zju.edu.cn

@@ -1,0 +1,22 @@
+{
+  "provider": "zhejiang",
+  "sources": [
+    "_original/zhejiang-mirror-service-openapi.yml"
+  ],
+  "outputs": [
+    "zhejiang-catalog-api-openapi.yml",
+    "zhejiang-repositories-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "zhejiang-mirror-service-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "zhejiang-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "zhejiang-repositories-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Zhejiang University Open Source Software Mirror Service Catalog API
+  title: Zhejiang University Open Source Software Mirror Service…
   version: '1.7'
   summary: Read-only HTTP service catalog and file distribution for the ZJU open source mirror.
-  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain. The mirror publishes a machine-readable service catalog at /mirrorz.json implementing the MirrorZ data contract (self-declared version 1.7), listing every mirrored repository with its path, sync status token, upstream source, on-disk size and documentation link. The repositories themselves are served as ordinary anonymous HTTPS directory trees. This description was DERIVED by API Evangelist from the live response and the upstream MirrorZ JSON Schema; ZJU does not publish an OpenAPI description of this service.
+  description: Zhejiang University operates a public open source software mirror at mirrors.zju.edu.cn (浙江大学开源软件镜像站), maintained by the ZJU Supercomputing Team (ZJUSCT) on the university's own registrable domain.
   contact:
     name: ZJU Mirror maintainers (ZJU Supercomputing Team)
     email: mirrors@zju.edu.cn
@@ -59,11 +59,56 @@ paths:
               schema:
                 type: string
 components:
-  examples:
-    ZjuCatalogExcerpt:
-      summary: Excerpt of the live 2026-08-19 response
-      externalValue: ../examples/zhejiang-mirrorz-example.json
   schemas:
+    MirrorZDocument:
+      type: object
+      required:
+      - site
+      - info
+      - mirrors
+      properties:
+        version:
+          type: number
+          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
+          example: 1.7
+        site:
+          $ref: '#/components/schemas/Site'
+        info:
+          type: array
+          description: Category view of services. ZJU serves this as an empty array.
+          items:
+            $ref: '#/components/schemas/InfoEntry'
+        mirrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mirror'
+    InfoEntry:
+      type: object
+      required:
+      - category
+      - distro
+      - urls
+      properties:
+        category:
+          type: string
+          enum:
+          - os
+          - app
+          - font
+        distro:
+          type: string
+        urls:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - url
+            properties:
+              name:
+                type: string
+              url:
+                type: string
     Mirror:
       type: object
       required:
@@ -100,55 +145,6 @@ components:
           type: string
           description: Human-readable on-disk size.
           example: 37.6 GiB
-    InfoEntry:
-      type: object
-      required:
-      - category
-      - distro
-      - urls
-      properties:
-        category:
-          type: string
-          enum:
-          - os
-          - app
-          - font
-        distro:
-          type: string
-        urls:
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - url
-            properties:
-              name:
-                type: string
-              url:
-                type: string
-    MirrorZDocument:
-      type: object
-      required:
-      - site
-      - info
-      - mirrors
-      properties:
-        version:
-          type: number
-          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
-          example: 1.7
-        site:
-          $ref: '#/components/schemas/Site'
-        info:
-          type: array
-          description: Category view of services. ZJU serves this as an empty array.
-          items:
-            $ref: '#/components/schemas/InfoEntry'
-        mirrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Mirror'
     Site:
       type: object
       required:
@@ -191,3 +187,7 @@ components:
           type: string
         big:
           type: string
+  examples:
+    ZjuCatalogExcerpt:
+      summary: Excerpt of the live 2026-08-19 response
+      externalValue: ../examples/zhejiang-mirrorz-example.json
