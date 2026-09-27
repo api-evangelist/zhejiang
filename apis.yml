@@ -189,6 +189,7 @@ apis:
   - type: Authentication
     url: authentication/zhejiang-authentication.yml
 - aid: zhejiang:sso
+  x-published: false
   name: Unified Identity Authentication (CAS / SSO)
   x-operator: institution
   x-operator-basis: Host zjuam.zju.edu.cn is under zju.edu.cn, ZJU's own registrable domain.
