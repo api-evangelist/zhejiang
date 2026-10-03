@@ -60,64 +60,6 @@ paths:
                 type: string
 components:
   schemas:
-    MirrorZDocument:
-      type: object
-      required:
-      - site
-      - info
-      - mirrors
-      properties:
-        version:
-          type: number
-          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
-          example: 1.7
-        site:
-          $ref: '#/components/schemas/Site'
-        info:
-          type: array
-          description: Category view of services. ZJU serves this as an empty array.
-          items:
-            $ref: '#/components/schemas/InfoEntry'
-        mirrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Mirror'
-    Mirror:
-      type: object
-      required:
-      - cname
-      - url
-      - status
-      properties:
-        cname:
-          type: string
-          description: Repository name.
-          example: CPAN
-        desc:
-          type: string
-          description: Human description, served in Chinese by this site.
-          example: Perl 语言模块仓库
-        url:
-          type: string
-          description: Site-relative or absolute URL to the repository tree.
-          example: /CPAN
-        status:
-          type: string
-          description: MirrorZ sync status token. Grammar `^(([SYFP]\d*)|[CRU])([XNO]\d+)*$` — leading letter is the sync state (S success, Y syncing, F failed, P paused, C cached, R redirect, U unknown), followed by Unix-timestamp-bearing suffixes (X last successful sync, N next scheduled sync, O last attempt).
-          pattern: ^(([SYFP]\d*)|[CRU])([XNO]\d+)*$
-          example: S1787153767X1787182567
-        help:
-          type: string
-          description: Path to the site's usage documentation for this repository.
-          example: /docs/CPAN/
-        upstream:
-          type: string
-          description: Upstream source this repository syncs from.
-          example: rsync://mirrors.tuna.tsinghua.edu.cn/CPAN/
-        size:
-          type: string
-          description: Human-readable on-disk size.
-          example: 37.6 GiB
     Site:
       type: object
       required:
@@ -187,6 +129,64 @@ components:
                 type: string
               url:
                 type: string
+    MirrorZDocument:
+      type: object
+      required:
+      - site
+      - info
+      - mirrors
+      properties:
+        version:
+          type: number
+          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
+          example: 1.7
+        site:
+          $ref: '#/components/schemas/Site'
+        info:
+          type: array
+          description: Category view of services. ZJU serves this as an empty array.
+          items:
+            $ref: '#/components/schemas/InfoEntry'
+        mirrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mirror'
+    Mirror:
+      type: object
+      required:
+      - cname
+      - url
+      - status
+      properties:
+        cname:
+          type: string
+          description: Repository name.
+          example: CPAN
+        desc:
+          type: string
+          description: Human description, served in Chinese by this site.
+          example: Perl 语言模块仓库
+        url:
+          type: string
+          description: Site-relative or absolute URL to the repository tree.
+          example: /CPAN
+        status:
+          type: string
+          description: MirrorZ sync status token. Grammar `^(([SYFP]\d*)|[CRU])([XNO]\d+)*$` — leading letter is the sync state (S success, Y syncing, F failed, P paused, C cached, R redirect, U unknown), followed by Unix-timestamp-bearing suffixes (X last successful sync, N next scheduled sync, O last attempt).
+          pattern: ^(([SYFP]\d*)|[CRU])([XNO]\d+)*$
+          example: S1787153767X1787182567
+        help:
+          type: string
+          description: Path to the site's usage documentation for this repository.
+          example: /docs/CPAN/
+        upstream:
+          type: string
+          description: Upstream source this repository syncs from.
+          example: rsync://mirrors.tuna.tsinghua.edu.cn/CPAN/
+        size:
+          type: string
+          description: Human-readable on-disk size.
+          example: 37.6 GiB
   examples:
     ZjuCatalogExcerpt:
       summary: Excerpt of the live 2026-08-19 response
