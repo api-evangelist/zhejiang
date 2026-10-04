@@ -60,6 +60,55 @@ paths:
                 type: string
 components:
   schemas:
+    MirrorZDocument:
+      type: object
+      required:
+      - site
+      - info
+      - mirrors
+      properties:
+        version:
+          type: number
+          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
+          example: 1.7
+        site:
+          $ref: '#/components/schemas/Site'
+        info:
+          type: array
+          description: Category view of services. ZJU serves this as an empty array.
+          items:
+            $ref: '#/components/schemas/InfoEntry'
+        mirrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Mirror'
+    InfoEntry:
+      type: object
+      required:
+      - category
+      - distro
+      - urls
+      properties:
+        category:
+          type: string
+          enum:
+          - os
+          - app
+          - font
+        distro:
+          type: string
+        urls:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - url
+            properties:
+              name:
+                type: string
+              url:
+                type: string
     Site:
       type: object
       required:
@@ -102,55 +151,6 @@ components:
           type: string
         big:
           type: string
-    InfoEntry:
-      type: object
-      required:
-      - category
-      - distro
-      - urls
-      properties:
-        category:
-          type: string
-          enum:
-          - os
-          - app
-          - font
-        distro:
-          type: string
-        urls:
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - url
-            properties:
-              name:
-                type: string
-              url:
-                type: string
-    MirrorZDocument:
-      type: object
-      required:
-      - site
-      - info
-      - mirrors
-      properties:
-        version:
-          type: number
-          description: MirrorZ data contract version declared by the site. ZJU serves 1.7.
-          example: 1.7
-        site:
-          $ref: '#/components/schemas/Site'
-        info:
-          type: array
-          description: Category view of services. ZJU serves this as an empty array.
-          items:
-            $ref: '#/components/schemas/InfoEntry'
-        mirrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Mirror'
     Mirror:
       type: object
       required:
